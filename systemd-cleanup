@@ -16,10 +16,10 @@ do
     fi
     case $type in
         system)
-            /usr/bin/systemctl disable --now "$unit"
+            /usr/bin/systemctl disable --now $unit
             ;;
         user)
-            /usr/bin/systemctl --global disable --now "$unit"
+            /usr/bin/systemctl --global disable --now $unit
             ;;
     esac
 done
