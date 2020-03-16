@@ -6,6 +6,14 @@ do
     type=${unit#usr/lib/systemd/}
     type=${type%/*.*}
     unit=${unit#usr/lib/systemd/*/}
+    if [[ $unit == *@.* ]]; then
+        unit=${unit/@/@*}
+        mapfile -t units < <(/usr/bin/find /etc/systemd/"$type"/*.wants -name "$unit")
+        unit=${units[*]#/etc/systemd/$type/*.wants/}
+        if [[ ! $unit ]]; then
+            continue
+        fi
+    fi
     case $type in
         system)
             /usr/bin/systemctl disable --now "$unit"
