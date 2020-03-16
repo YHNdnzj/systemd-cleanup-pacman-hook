@@ -1,2 +1,2 @@
 # systemd-cleanup-pacman-hook
-Remove broken symlinks of systemd units after transaction
+Stop and remove systemd units before removing packages

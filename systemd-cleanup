@@ -1,0 +1,19 @@
+#!/bin/bash
+
+mapfile -t units
+for unit in "${units[@]}"
+do
+    type=${unit#usr/lib/systemd/}
+    type=${type%/*.*}
+    unit=${unit#usr/lib/systemd/*/}
+    case $type in
+        system)
+            /usr/bin/systemctl disable --now "$unit"
+            ;;
+        user)
+            /usr/bin/systemctl --global disable --now "$unit"
+            ;;
+    esac
+done
+
+# vim: set ft=sh ts=4 sw=4 et:

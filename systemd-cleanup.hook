@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Remove
+Type = Path
+Target = usr/lib/systemd/system/*
+Target = usr/lib/systemd/user/*
+
+[Action]
+Description = Disabling to-be-removed systemd units...
+When = PreTransaction
+Exec = /usr/share/libalpm/scripts/systemd-cleanup
+NeedsTargets
