@@ -17,7 +17,7 @@ source=(
     "LICENSE"
 )
 sha256sums=('dee6825301d045f4e8ca8bd0ec07a00c89939f16d0c986ea96dc2a5e107ab9e1'
-            '8c13c4eaec16ed2daa34bf643a7b538fdc62bd16324e3810c909fe376c3b29f5'
+            '582dae6fa8152d643601dfbd13048351cda48e467788e9e7e5f2a8746e4ea5ed'
             'c8cf371aeff275cae6fc648d2d42e2d2e9e3b66724ba0af14a30670fc6f74a4e'
             '9d98f571d3683e2d771b8aa1eb23041c4d073de222ed2d054690e3366d97526a')
 
@@ -26,7 +26,7 @@ pkgver() {
 }
 
 package() {
-    depends=('bash' 'systemd')
+    depends=('findutils' 'systemd')
 
     install -Dm644 systemd-cleanup.hook "$pkgdir/usr/share/libalpm/hooks/systemd-cleanup.hook"
     install -Dm755 systemd-cleanup "$pkgdir/usr/share/libalpm/scripts/systemd-cleanup"
