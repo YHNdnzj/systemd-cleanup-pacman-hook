@@ -8,7 +8,7 @@ do
     fi
     type=${unit#usr/lib/systemd/}
     type=${type%/*.*}
-    unit=${unit#usr/lib/systemd/*/}
+    unit=${unit#usr/lib/systemd/$type/}
     if [[ $unit == *@.* ]]; then
         unit=${unit/@/@*}
         mapfile -t units < <(/usr/bin/find /etc/systemd/"$type"/*.wants -name "$unit")
