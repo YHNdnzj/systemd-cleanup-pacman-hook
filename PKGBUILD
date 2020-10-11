@@ -17,7 +17,7 @@ source=(
     "LICENSE"
 )
 sha256sums=('dee6825301d045f4e8ca8bd0ec07a00c89939f16d0c986ea96dc2a5e107ab9e1'
-            '1efa7d1a7fe8a15d3bf72b8bb20086b7a2cdbb838ffbfe7cb5acae28eb3dc500'
+            'c4a7cf4d0c4003bd01237b39c22a78089b5e634025cadb996e57eb1832232dfd'
             'b7d63c0afc21c2e21c2ef3cfa7fbd1f12b42da568831bcf24de5c56c7f065d63'
             '9d98f571d3683e2d771b8aa1eb23041c4d073de222ed2d054690e3366d97526a')
 

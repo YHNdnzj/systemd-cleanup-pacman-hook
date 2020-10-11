@@ -3,7 +3,7 @@
 mapfile -t units
 for unit in "${units[@]}"
 do
-    if [[ -L /$unit || ! -f /$unit ]]; then
+    if [[ -L $unit || ! -f $unit ]]; then
         continue
     fi
     type=${unit#usr/lib/systemd/}
