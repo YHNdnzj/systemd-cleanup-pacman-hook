@@ -1,28 +1,21 @@
 #!/bin/bash
 
-mapfile -t units
-for unit in "${units[@]}"
+mapfile -t unitpaths
+for unitpath in "${unitpaths[@]}"
 do
-    if [[ -L $unit || ! -f $unit ]]; then
+    if [[ -L $unitpath || ! -f $unitpath ]]; then
         continue
     fi
-    type=${unit#usr/lib/systemd/}
+    type=${unitpath#usr/lib/systemd/}
     type=${type%/*.*}
-    unit=${unit#usr/lib/systemd/$type/}
-    if [[ $unit == *@.* ]]; then
-        unit=${unit/@/@*}
-        mapfile -t units < <(/usr/bin/find /etc/systemd/"$type"/*.wants -name "$unit")
-        unit=${units[*]#/etc/systemd/$type/*.wants/}
-        if [[ ! $unit ]]; then
-            continue
-        fi
-    fi
+    unit=${unitpath#usr/lib/systemd/$type/}
     case $type in
         system)
-            /usr/bin/systemctl disable --now $unit
+            /usr/bin/systemctl disable --no-reload "$unit"
+            /usr/bin/systemctl stop "${unit/@/@*}"
             ;;
         user)
-            /usr/bin/systemctl --global disable $unit
+            /usr/bin/systemctl --global disable "$unit"
             ;;
     esac
 done
