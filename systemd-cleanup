@@ -22,7 +22,7 @@ do
             /usr/bin/systemctl disable --now $unit
             ;;
         user)
-            /usr/bin/systemctl --global disable --now $unit
+            /usr/bin/systemctl --global disable $unit
             ;;
     esac
 done
