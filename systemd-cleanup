@@ -6,9 +6,9 @@ do
     if [[ -L $unitpath || ! -f $unitpath ]]; then
         continue
     fi
-    type=${unitpath#usr/lib/systemd/}
-    type=${type%/*.*}
-    unit=${unitpath#usr/lib/systemd/$type/}
+    IFS='/' read -ra unitarray <<< "$unitpath"
+    type=${unitarray[4]}
+    unit=${unitarray[5]}
     case $type in
         system)
             /usr/bin/systemctl disable --no-reload "$unit"
