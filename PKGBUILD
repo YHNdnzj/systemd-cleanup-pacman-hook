@@ -14,25 +14,22 @@ source=(
     "systemd-cleanup.hook"
     "systemd-cleanup"
     "README.md"
-    "LICENSE"
 )
-sha256sums=('dee6825301d045f4e8ca8bd0ec07a00c89939f16d0c986ea96dc2a5e107ab9e1'
-            'cb8e0d8b79707c32b5ea451a0374d111a29fd0fa1eb536fe7d08b0812731c8a7'
-            'b7d63c0afc21c2e21c2ef3cfa7fbd1f12b42da568831bcf24de5c56c7f065d63'
-            '9d98f571d3683e2d771b8aa1eb23041c4d073de222ed2d054690e3366d97526a')
+sha256sums=('SKIP'
+            'SKIP'
+            'SKIP')
 
 pkgver() {
     git describe --long | sed -r 's/([^-]*-g)/r\1/;s/-/./g'
 }
 
 package() {
-    depends=('findutils' 'systemd')
+    depends=('bash' 'systemd')
 
     install -Dm644 systemd-cleanup.hook "$pkgdir/usr/share/libalpm/hooks/systemd-cleanup.hook"
     install -Dm755 systemd-cleanup "$pkgdir/usr/share/libalpm/scripts/systemd-cleanup"
 
     install -Dm644 README.md "$pkgdir/usr/share/doc/systemd-cleanup-pacman-hook/README.md"
-    install -Dm644 LICENSE "$pkgdir/usr/share/licenses/systemd-cleanup-pacman-hook/LICENSE"
 }
 
 # vim: set ts=4 sw=4 et:
