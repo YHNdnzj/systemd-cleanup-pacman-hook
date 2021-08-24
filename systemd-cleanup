@@ -8,8 +8,8 @@ do
         continue
     fi
     IFS='/' read -ra unitarray <<< "$unitpath"
-    type=${unitarray[4]}
-    unit=${unitarray[5]}
+    type=${unitarray[3]}
+    unit=${unitarray[4]}
     case $type in
         system)
             /usr/bin/systemctl disable --no-reload "$unit"
