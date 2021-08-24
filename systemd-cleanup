@@ -1,4 +1,5 @@
 #!/bin/bash
+user_stops=()
 
 mapfile -t unitpaths
 for unitpath in "${unitpaths[@]}"
@@ -16,8 +17,13 @@ do
             ;;
         user)
             /usr/bin/systemctl --global disable "$unit"
+            user_stops+=("$unit")
             ;;
     esac
 done
+
+if (( ${#user_stops[@]} )); then
+    echo -e "User units to be stopped manually with \`systemctl --user':\n${user_stops[*]}"
+fi
 
 # vim: set ft=sh ts=4 sw=4 et:
