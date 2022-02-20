@@ -4,7 +4,7 @@ user_stops=()
 mapfile -t unitpaths
 for unitpath in "${unitpaths[@]}"
 do
-    if [[ -L $unitpath || ! -f $unitpath ]]; then
+    if [[ -d $unitpath || -L $unitpath || ! -f $unitpath ]]; then
         continue
     fi
     IFS='/' read -ra unitarray <<< "$unitpath"
@@ -23,7 +23,7 @@ do
 done
 
 if (( ${#user_stops[@]} )); then
-    echo -e "User units to be stopped manually with \`systemctl --user':\n${user_stops[*]}"
+    printf "User units to be stopped manually with \`systemctl --user':\n%s\n" "${user_stops[@]}"
 fi
 
 # vim: set ft=sh ts=4 sw=4 et:
