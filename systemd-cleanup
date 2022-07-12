@@ -16,13 +16,13 @@ do
             ;;
         user)
             /usr/bin/systemctl --global disable "$unit"
-            user_stops+=("$unit")
+            user_stops+=("${unit/@/@*}")
             ;;
     esac
 done
 
 if (( ${#user_stops[@]} )); then
-    printf "User units to be stopped manually with \`systemctl --user':\n%s\n" "${user_stops[*]}"
+    printf "==> Use \`systemctl --user %s' to stop all remaining units in user manager\n" "${user_stops[*]}"
 fi
 
 # vim: set ft=sh ts=4 sw=4 et:
