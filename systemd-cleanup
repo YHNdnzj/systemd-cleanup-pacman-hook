@@ -22,7 +22,7 @@ do
 done
 
 if (( ${#user_stops[@]} )); then
-    printf "==> Use \`systemctl --user %s' to stop all remaining units in user manager\n" "${user_stops[*]}"
+    printf "==> Use \`systemctl --user stop %s' to stop all remaining units in user manager\n" "${user_stops[*]}"
 fi
 
 # vim: set ft=sh ts=4 sw=4 et:
