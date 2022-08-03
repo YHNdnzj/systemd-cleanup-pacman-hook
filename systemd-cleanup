@@ -12,7 +12,8 @@ do
     unit=${unitarray[4]}
     case $type in
         system)
-            /usr/bin/systemctl disable --now "$unit"
+            /usr/bin/systemctl disable --no-reload "$unit"
+            /usr/bin/systemctl stop "${unit/@/@*}"
             ;;
         user)
             /usr/bin/systemctl --global disable "$unit"
