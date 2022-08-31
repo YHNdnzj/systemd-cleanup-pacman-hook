@@ -4,10 +4,12 @@ user_stops=()
 mapfile -t unitpaths
 for unitpath in "${unitpaths[@]}"
 do
-    if [[ -d $unitpath || -L $unitpath || ! -f $unitpath ]]; then
+    IFS='/' read -ra unitarray <<< "$unitpath"
+    # if the path leads to a drop-in file, a dir or a symlink, we skip it
+    if (( ${#unitarray[@]} > 5 )) || [[ ! -f $unitpath || -L $unitpath ]]; then
         continue
     fi
-    IFS='/' read -ra unitarray <<< "$unitpath"
+
     type=${unitarray[3]}
     unit=${unitarray[4]}
     case $type in
