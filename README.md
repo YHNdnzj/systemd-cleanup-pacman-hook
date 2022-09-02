@@ -8,7 +8,7 @@ Stop and disable systemd units before removing packages
 
 ### Usage
 
-Just remove packages like usual using `pacman`, and it will be taken care of automatically for you.
+Just remove packages as usual using `pacman`, and it will be taken care of automatically for you.
 
 #### Check for broken symlinks
 
