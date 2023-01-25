@@ -14,11 +14,11 @@ do
     unit=${unitarray[4]}
     case $type in
         system)
-            /usr/bin/systemctl disable --no-reload "$unit"
+            /usr/bin/systemctl disable --no-reload --no-warn "$unit"
             /usr/bin/systemctl stop "${unit/@/@*}"
             ;;
         user)
-            /usr/bin/systemctl --global disable "$unit"
+            /usr/bin/systemctl --global disable --no-warn "$unit"
             user_stops+=("${unit/@/@*}")
             ;;
     esac
