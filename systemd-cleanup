@@ -1,17 +1,36 @@
 #!/bin/bash
+
+try_enable_color() {
+    local colors
+
+    if [[ -t 0 ]] || ! colors="$(tput colors 2>/dev/null)"; then
+        return 0
+    fi
+
+    if (( colors > 0 )) && tput setaf 0 &>/dev/null; then
+        _color_none="$(tput sgr0)"
+        _color_bold="$(tput bold)"
+        _color_green="$_color_bold$(tput setaf 2)"
+        _color_blue="$_color_bold$(tput setaf 4)"
+    fi
+}
+
 user_stops=()
 
 mapfile -t unitpaths
 for unitpath in "${unitpaths[@]}"
 do
     IFS='/' read -ra unitarray <<< "$unitpath"
-    # if the path leads to a drop-in file, a dir or a symlink, we skip it
+
+    # If the path leads to a drop-in file, a dir or a symlink, we skip it
+    # Example of a valid entry: usr/lib/systemd/system/user@.service
     if (( ${#unitarray[@]} > 5 )) || [[ ! -f $unitpath || -L $unitpath ]]; then
         continue
     fi
 
     type=${unitarray[3]}
     unit=${unitarray[4]}
+
     case $type in
         system)
             /usr/bin/systemctl disable --no-reload --no-warn "$unit"
@@ -19,13 +38,16 @@ do
             ;;
         user)
             /usr/bin/systemctl --global disable --no-warn "$unit"
-            user_stops+=("${unit/@/@*}")
+            user_stops+=("'${unit/@/@*}'")
             ;;
     esac
 done
 
 if (( ${#user_stops[@]} )); then
-    printf "==> Use \`systemctl --user stop %s' to stop all remaining units in user manager\n" "${user_stops[*]}"
+    try_enable_color
+
+    printf "%s==>%s%s%s\n" "$_color_green" "$_color_none $_color_bold" "${#user_stops[@]} user units being removed" "$_color_none"
+    printf "  %s->%s%s%s\n" "$_color_blue" "$_color_none $_color_bold" "To stop them in current user manager, run \"systemctl --user stop ${user_stops[*]}\"" "$_color_none"
 fi
 
 # vim: set ft=sh ts=4 sw=4 et:
