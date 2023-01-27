@@ -46,7 +46,7 @@ done
 if (( ${#user_stops[@]} )); then
     try_enable_color
 
-    printf "%s==>%s%s%s\n" "$_color_green" "$_color_none $_color_bold" "${#user_stops[@]} user units being removed" "$_color_none"
+    printf "%s==>%s%s%s\n" "$_color_green" "$_color_none $_color_bold" "${#user_stops[@]} user unit(s) being removed" "$_color_none"
     printf "  %s->%s%s%s\n" "$_color_blue" "$_color_none $_color_bold" "To stop them in current user manager, run \"systemctl --user stop ${user_stops[*]}\"" "$_color_none"
 fi
 
