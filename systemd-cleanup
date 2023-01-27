@@ -13,6 +13,8 @@ try_enable_color() {
         _color_green="$_color_bold$(tput setaf 2)"
         _color_blue="$_color_bold$(tput setaf 4)"
     fi
+
+    return 0
 }
 
 user_stops=()
