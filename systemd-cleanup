@@ -1,6 +1,8 @@
 #!/bin/bash
+set -u
+
 revert=0
-user_stops=()
+user_units=()
 
 if [[ "$1" == "--revert" ]]; then
     revert=1
@@ -35,17 +37,17 @@ do
             fi
 
             /usr/bin/systemctl --global disable --no-warn "$unit"
-            user_stops+=("'${unit/@/@*}'")
+            user_units+=("'${unit/@/@*}'")
             ;;
     esac
 done
 
-if (( ${#user_stops[@]} )); then
-    printf "==> %s user unit(s) being removed\n" "${#user_stops[@]}"
-    printf "  -> To stop them in current user manager, run \"systemctl --user stop %s\"" "${user_stops[*]}"
+if (( ${#user_units[@]} )); then
+    printf "==> %s user unit(s) being removed\n" "${#user_units[@]}"
+    printf "  -> To stop them in current user manager, run \"systemctl --user stop %s\"\n" "${user_units[*]}"
 
     if (( revert )); then
-        printf "  -> To revert changes to them, run \"systemctl --user revert %s\"" "${user_stops[*]}"
+        printf "  -> To revert changes to them, run \"systemctl --user revert %s\"\n" "${user_units[*]}"
     fi
 fi
 
