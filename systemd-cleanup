@@ -1,12 +1,12 @@
 #!/bin/bash
-set -u
-
 revert=0
 user_units=()
 
 if [[ "$1" == "--revert" ]]; then
     revert=1
 fi
+
+set -u
 
 mapfile -t unitpaths
 for unitpath in "${unitpaths[@]}"
