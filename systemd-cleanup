@@ -1,22 +1,4 @@
 #!/bin/bash
-
-try_enable_color() {
-    local colors
-
-    if [[ -t 0 ]] || ! colors="$(tput colors 2>/dev/null)"; then
-        return 0
-    fi
-
-    if (( colors > 0 )) && tput setaf 0 &>/dev/null; then
-        _color_none="$(tput sgr0)"
-        _color_bold="$(tput bold)"
-        _color_green="$_color_bold$(tput setaf 2)"
-        _color_blue="$_color_bold$(tput setaf 4)"
-    fi
-
-    return 0
-}
-
 user_stops=()
 
 mapfile -t unitpaths
@@ -46,10 +28,8 @@ do
 done
 
 if (( ${#user_stops[@]} )); then
-    try_enable_color
-
-    printf "%s==>%s%s%s\n" "$_color_green" "$_color_none $_color_bold" "${#user_stops[@]} user unit(s) being removed" "$_color_none"
-    printf "  %s->%s%s%s\n" "$_color_blue" "$_color_none $_color_bold" "To stop them in current user manager, run \"systemctl --user stop ${user_stops[*]}\"" "$_color_none"
+    printf "==> %s user unit(s) being removed\n" "${#user_stops[@]}"
+    printf "  -> To stop them in current user manager, run \"systemctl --user stop %s\"" "${user_stops[*]}"
 fi
 
 # vim: set ft=sh ts=4 sw=4 et:
