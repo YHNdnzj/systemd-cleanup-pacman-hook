@@ -43,6 +43,10 @@ done
 if (( ${#user_stops[@]} )); then
     printf "==> %s user unit(s) being removed\n" "${#user_stops[@]}"
     printf "  -> To stop them in current user manager, run \"systemctl --user stop %s\"" "${user_stops[*]}"
+
+    if (( revert )); then
+        printf "  -> To revert changes to them, run \"systemctl --user revert %s\"" "${user_stops[*]}"
+    fi
 fi
 
 # vim: set ft=sh ts=4 sw=4 et:
