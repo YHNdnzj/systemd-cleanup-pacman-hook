@@ -1,5 +1,10 @@
 #!/bin/bash
+revert=0
 user_stops=()
+
+if [[ "$1" == "--revert" ]]; then
+    revert=1
+fi
 
 mapfile -t unitpaths
 for unitpath in "${unitpaths[@]}"
@@ -17,10 +22,18 @@ do
 
     case $type in
         system)
+            if (( revert )); then
+                /usr/bin/systemctl revert "$unit"
+            fi
+
             /usr/bin/systemctl disable --no-reload --no-warn "$unit"
             /usr/bin/systemctl stop "${unit/@/@*}"
             ;;
         user)
+            if (( revert )); then
+                /usr/bin/systemctl --global revert "$unit"
+            fi
+
             /usr/bin/systemctl --global disable --no-warn "$unit"
             user_stops+=("'${unit/@/@*}'")
             ;;
