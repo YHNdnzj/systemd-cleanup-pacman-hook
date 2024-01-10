@@ -42,7 +42,7 @@ while read -r unitpath; do
     esac
 done
 
-if (( ${#user_units[@]} )); then
+if (( ${#user_units[@]} > 0 )); then
     printf "==> %s user unit(s) being removed\n" "${#user_units[@]}"
     printf "  -> To stop them in current user manager, run \"systemctl --user stop %s\"\n" "${user_units[*]}"
 
