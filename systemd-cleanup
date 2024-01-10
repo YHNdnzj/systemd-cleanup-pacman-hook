@@ -8,9 +8,7 @@ fi
 
 set -u
 
-mapfile -t unitpaths
-for unitpath in "${unitpaths[@]}"
-do
+while read -r unitpath; do
     IFS='/' read -ra unitarray <<< "$unitpath"
 
     # If the path leads to a drop-in file, a dir or a symlink, we skip it
