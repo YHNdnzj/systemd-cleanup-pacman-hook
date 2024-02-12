@@ -26,10 +26,7 @@ while read -r unitpath; do
                 /usr/bin/systemctl revert "$unit"
             fi
 
-            # Manager will be reloaded by post hook, so no explicit reload at the end
-            /usr/bin/systemctl disable --no-reload --no-warn "$unit"
-            # FIXME: Use disable --now after resolving https://github.com/systemd/systemd/issues/15620
-            /usr/bin/systemctl stop "${unit/@/@*}"
+            /usr/bin/systemctl disable --now --no-warn "$unit"
             ;;
         user)
             if (( revert )); then
