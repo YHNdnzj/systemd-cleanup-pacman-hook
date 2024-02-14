@@ -26,7 +26,8 @@ while read -r unitpath; do
                 /usr/bin/systemctl revert "$unit"
             fi
 
-            /usr/bin/systemctl disable --now --no-warn "$unit"
+            # Manager will be reloaded by post hook, so no explicit reload here
+            /usr/bin/systemctl disable --now --no-reload --no-warn "$unit"
             ;;
         user)
             if (( revert )); then
